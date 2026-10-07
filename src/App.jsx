@@ -703,10 +703,7 @@ function DashboardPage() {
     const url =
       `https://hddoy2021.app.n8n.cloud/webhook/report-download?month=${month}`;
 
-    window.open(
-      url,
-      '_blank'
-    );
+    window.location.href = url;
   }
   return (
 
