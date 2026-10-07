@@ -1,3 +1,20 @@
+:root {
+  --kt-red: #ed1c24;
+  --kt-red-dark: #c81018;
+  --kt-soft-red: #fff1f2;
+
+  --kt-black: #111111;
+  --kt-navy: #173454;
+
+  --bg: #f6f7f9;
+  --card: #ffffff;
+
+  --border: #e4e7eb;
+  --text: #1b1d21;
+  --text-sub: #737980;
+}
+
+
 * {
   box-sizing: border-box;
 }
@@ -33,177 +50,185 @@ button {
 /* ==============================
    HEADER
 ============================== */
-
 .header {
   position: sticky;
   top: 0;
   z-index: 100;
 
-  background: rgba(
-    255,
-    255,
-    255,
-    0.95
-  );
+  background: rgba(255, 255, 255, 0.97);
 
-  border-bottom:
-    1px solid #eaeaf0;
+  border-bottom: 1px solid var(--border);
 
-  backdrop-filter:
-    blur(12px);
+  backdrop-filter: blur(14px);
 }
 
 
 .header-inner {
-  width:
-    min(
-      1180px,
-      92%
-    );
+  width: min(1180px, 92%);
 
-  margin:
-    0 auto;
+  min-height: 88px;
 
-  min-height:
-    82px;
+  margin: 0 auto;
 
-  display:
-    flex;
+  display: flex;
 
-  align-items:
-    center;
+  align-items: center;
+  justify-content: space-between;
 
-  justify-content:
-    space-between;
-
-  gap:
-    30px;
+  gap: 30px;
 }
 
 
 .brand {
-  display:
-    flex;
+  display: flex;
+  align-items: center;
 
-  align-items:
-    center;
-
-  gap:
-    13px;
+  gap: 17px;
 }
 
 
-.team {
-  padding:
-    6px 10px;
+.logo-box {
+  width: 68px;
+  height: 48px;
 
-  border-radius:
-    30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  background:
-    #eee9ff;
+  overflow: hidden;
+}
 
-  color:
-    #7056c7;
 
-  font-size:
-    12px;
+.kt-logo {
+  width: 64px;
+  height: auto;
 
-  font-weight:
-    800;
+  display: block;
+
+  object-fit: contain;
+}
+
+
+.brand-divider {
+  width: 1px;
+  height: 35px;
+
+  background: #e2e5e9;
+}
+
+
+.brand-copy {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.brand-title-row {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
 }
 
 
 .brand h1 {
-  margin:
-    0;
+  margin: 0;
 
-  font-size:
-    25px;
+  color: var(--kt-black);
 
-  letter-spacing:
-    -1px;
+  font-size: 25px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: -1.2px;
 }
 
 
-.brand p {
-  margin:
-    4px 0 0;
+.team-badge {
+  padding: 4px 8px;
 
-  color:
-    #888;
+  border-radius: 20px;
 
-  font-size:
-    12px;
+  background: var(--kt-soft-red);
+
+  color: var(--kt-red);
+
+  font-size: 10px;
+  font-weight: 800;
 }
+
 
 
 /* ==============================
    NAV
 ============================== */
-
 .nav {
-  display:
-    flex;
+  display: flex;
 
-  gap:
-    7px;
+  gap: 4px;
 
-  padding:
-    5px;
+  padding: 4px;
 
-  border-radius:
-    12px;
+  border-radius: 10px;
 
-  background:
-    #f4f3f8;
+  background: #f5f6f7;
 }
 
 
 .nav-button {
-  border:
-    0;
+  position: relative;
 
-  border-radius:
-    9px;
+  border: 0;
 
-  padding:
-    10px 16px;
+  border-radius: 8px;
 
-  background:
-    transparent;
+  padding: 11px 17px;
 
-  color:
-    #777;
+  background: transparent;
 
-  font-size:
-    13px;
+  color: #737980;
 
-  font-weight:
-    700;
+  font-size: 13px;
+  font-weight: 700;
 
-  transition:
-    0.2s;
+  transition: 0.18s ease;
+}
+
+
+.nav-button:hover {
+  color: var(--kt-black);
+
+  background: #ffffff;
 }
 
 
 .nav-button.active {
-  background:
-    white;
+  background: #ffffff;
 
-  color:
-    #6e52c7;
+  color: var(--kt-black);
 
   box-shadow:
-    0 2px 10px
-    rgba(
-      0,
-      0,
-      0,
-      0.06
-    );
+    0 2px 8px
+    rgba(0, 0, 0, 0.06);
 }
 
+
+.nav-button.active::after {
+  content: "";
+
+  position: absolute;
+
+  left: 18px;
+  right: 18px;
+  bottom: 4px;
+
+  height: 2px;
+
+  border-radius: 2px;
+
+  background: var(--kt-red);
+}
 
 /* ==============================
    COMMON
@@ -231,16 +256,11 @@ button {
 
 
 .intro-label {
-  color:
-    #7356d1;
+  color: var(--kt-red);
 
-  font-size:
-    13px;
-
-  font-weight:
-    800;
+  font-size: 13px;
+  font-weight: 800;
 }
-
 
 .intro h2,
 .dashboard-header h2 {
@@ -410,55 +430,38 @@ button {
 
 .field input:focus,
 .field select:focus {
-  border-color:
-    #866bdc;
+  border-color: var(--kt-red);
 
   box-shadow:
     0 0 0 3px
-    rgba(
-      134,
-      107,
-      220,
-      0.12
-    );
+    rgba(237, 28, 36, 0.09);
 }
 
-
 .submit-button {
-  width:
-    100%;
+  width: 100%;
+  height: 52px;
 
-  height:
-    52px;
+  margin-top: 28px;
 
-  margin-top:
-    28px;
+  border: 0;
+  border-radius: 10px;
 
-  border:
-    0;
+  background: var(--kt-red);
 
-  border-radius:
-    11px;
+  color: white;
 
-  background:
-    #7558d4;
+  font-size: 14px;
+  font-weight: 800;
 
-  color:
-    white;
-
-  font-size:
-    14px;
-
-  font-weight:
-    800;
+  transition: 0.18s ease;
 }
 
 
 .submit-button:hover {
-  background:
-    #674ac5;
-}
+  background: var(--kt-red-dark);
 
+  transform: translateY(-1px);
+}
 
 .submit-button:disabled {
   opacity:
@@ -623,32 +626,26 @@ button {
 
 
 .summary-card.danger {
-  border-color:
-    #ffd6d6;
+  border-color: #ffc9cc;
 
-  background:
-    #fffafa;
+  background: #fff7f7;
 }
 
 
 .summary-card.danger strong {
-  color:
-    #d94a4a;
+  color: var(--kt-red);
 }
 
 
 .summary-card.best {
-  border-color:
-    #dcd4ff;
+  border-color: #d5e2ef;
 
-  background:
-    #fbfaff;
+  background: #f7faff;
 }
 
 
 .summary-card.best strong {
-  color:
-    #7155d0;
+  color: #21629c;
 }
 
 
@@ -800,51 +797,34 @@ button {
     800;
 }
 
-
 .status-관리필요 {
-  background:
-    #ffeaea;
-
-  color:
-    #d34a4a;
+  background: #ffe8ea;
+  color: #d71920;
 }
 
 
 .status-우수사례 {
-  background:
-    #eee9ff;
-
-  color:
-    #694dcc;
+  background: #eaf3fb;
+  color: #21629c;
 }
 
 
 .status-상승 {
-  background:
-    #e8f8ef;
-
-  color:
-    #277a53;
+  background: #eaf7ef;
+  color: #287d50;
 }
 
 
 .status-하락 {
-  background:
-    #fff1e6;
-
-  color:
-    #be682c;
+  background: #fff0e5;
+  color: #bd6426;
 }
 
 
 .status-유지 {
-  background:
-    #eeeeF2;
-
-  color:
-    #666;
+  background: #eef0f2;
+  color: #62676d;
 }
-
 
 /* ==============================
    STORE METRICS
@@ -931,38 +911,33 @@ button {
 
 
 .analysis-box {
-  margin-bottom:
-    11px;
+  margin-bottom: 11px;
 
-  background:
-    #f7f4ff;
+  padding: 17px 19px;
+
+  border-left: 3px solid var(--kt-red);
+
+  border-radius: 8px;
+
+  background: #fff7f7;
 }
 
+
+.box-label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: var(--kt-red);
+
+  font-size: 11px;
+  font-weight: 900;
+}
 
 .target-box {
   background:
     #f7f7f9;
 }
-
-
-.box-label,
-.target-box span {
-  display:
-    block;
-
-  margin-bottom:
-    5px;
-
-  color:
-    #7054c7;
-
-  font-size:
-    11px;
-
-  font-weight:
-    800;
-}
-
 
 .target-box span {
   color:
@@ -1087,17 +1062,19 @@ button {
 
   border-radius: 9px;
 
-  padding: 10px 16px;
+  padding: 10px 17px;
 
-  background: #7558d4;
+  background: var(--kt-red);
 
   color: white;
 
   font-size: 13px;
-
   font-weight: 800;
+
+  transition: 0.18s ease;
 }
 
+
 .download-button:hover {
-  background: #674ac5;
+  background: var(--kt-red-dark);
 }

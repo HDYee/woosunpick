@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ktLogo from './assets/kt-logo.jpg';
 import './App.css';
 
 const INPUT_WEBHOOK_URL =
@@ -46,16 +47,32 @@ function App() {
 
           <div className="brand">
 
-            <div className="team">
-              18조
+            <div className="logo-box">
+              <img
+                src={ktLogo}
+                alt="KT"
+                className="kt-logo"
+              />
             </div>
 
-            <div>
-              <h1>우선픽</h1>
+            <div className="brand-divider" />
+
+            <div className="brand-copy">
+
+              <div className="brand-title-row">
+
+                <h1>우선픽</h1>
+
+                <span className="team-badge">
+                  18조
+                </span>
+
+              </div>
 
               <p>
                 AI 대리점 실적·운영 분석 Agent
               </p>
+
             </div>
 
           </div>
@@ -76,7 +93,6 @@ function App() {
               매장 실적 입력
             </button>
 
-
             <button
               className={
                 page === 'dashboard'
@@ -95,7 +111,6 @@ function App() {
         </div>
 
       </header>
-
 
       {/* ==============================
           PAGE
@@ -688,131 +703,131 @@ function DashboardPage() {
   const stores =
     data?.stores ?? [];
 
-async function downloadLatestReport() {
+  async function downloadLatestReport() {
 
-  const month =
-    data?.analysis_month;
+    const month =
+      data?.analysis_month;
 
-  if (!month) {
-    alert(
-      '다운로드할 분석월이 없습니다.'
-    );
-    return;
-  }
-
-  const url =
-    `https://hddoy2021.app.n8n.cloud/webhook/report-download?month=${month}`;
-
-  try {
-
-    const response =
-      await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(
-        `PDF 다운로드 실패: ${response.status}`
+    if (!month) {
+      alert(
+        '다운로드할 분석월이 없습니다.'
       );
+      return;
     }
 
+    const url =
+      `https://hddoy2021.app.n8n.cloud/webhook/report-download?month=${month}`;
 
-    // ==============================
-    // 파일명 가져오기
-    // ==============================
+    try {
 
-    const disposition =
-      response.headers.get(
-        'Content-Disposition'
-      );
+      const response =
+        await fetch(url);
 
-    let fileName =
-      'woosunpick-report.pdf';
+      if (!response.ok) {
+        throw new Error(
+          `PDF 다운로드 실패: ${response.status}`
+        );
+      }
 
 
-    if (disposition) {
+      // ==============================
+      // 파일명 가져오기
+      // ==============================
 
-      // filename*=UTF-8''한글파일명.pdf
-      const utf8Match =
-        disposition.match(
-          /filename\*=UTF-8''([^;]+)/i
+      const disposition =
+        response.headers.get(
+          'Content-Disposition'
         );
 
-      if (utf8Match?.[1]) {
+      let fileName =
+        'woosunpick-report.pdf';
 
-        fileName =
-          decodeURIComponent(
-            utf8Match[1]
-          );
 
-      } else {
+      if (disposition) {
 
-        // fallback filename="..."
-        const normalMatch =
+        // filename*=UTF-8''한글파일명.pdf
+        const utf8Match =
           disposition.match(
-            /filename="?([^"]+)"?/i
+            /filename\*=UTF-8''([^;]+)/i
           );
 
-        if (normalMatch?.[1]) {
+        if (utf8Match?.[1]) {
+
           fileName =
-            normalMatch[1];
+            decodeURIComponent(
+              utf8Match[1]
+            );
+
+        } else {
+
+          // fallback filename="..."
+          const normalMatch =
+            disposition.match(
+              /filename="?([^"]+)"?/i
+            );
+
+          if (normalMatch?.[1]) {
+            fileName =
+              normalMatch[1];
+          }
+
         }
 
       }
 
-    }
+
+      // ==============================
+      // PDF Blob 생성
+      // ==============================
+
+      const blob =
+        await response.blob();
+
+      const blobUrl =
+        window.URL.createObjectURL(
+          blob
+        );
 
 
-    // ==============================
-    // PDF Blob 생성
-    // ==============================
+      // ==============================
+      // 강제 다운로드
+      // ==============================
 
-    const blob =
-      await response.blob();
+      const link =
+        document.createElement('a');
 
-    const blobUrl =
-      window.URL.createObjectURL(
-        blob
+      link.href =
+        blobUrl;
+
+      link.download =
+        fileName;
+
+      document.body.appendChild(
+        link
       );
 
+      link.click();
 
-    // ==============================
-    // 강제 다운로드
-    // ==============================
+      link.remove();
 
-    const link =
-      document.createElement('a');
+      window.URL.revokeObjectURL(
+        blobUrl
+      );
 
-    link.href =
-      blobUrl;
+    } catch (error) {
 
-    link.download =
-      fileName;
+      console.error(
+        'PDF 다운로드 오류:',
+        error
+      );
 
-    document.body.appendChild(
-      link
-    );
+      alert(
+        'PDF 다운로드 중 오류가 발생했습니다.'
+      );
 
-    link.click();
-
-    link.remove();
-
-    window.URL.revokeObjectURL(
-      blobUrl
-    );
-
-  } catch (error) {
-
-    console.error(
-      'PDF 다운로드 오류:',
-      error
-    );
-
-    alert(
-      'PDF 다운로드 중 오류가 발생했습니다.'
-    );
+    }
 
   }
-
-}
   return (
 
     <main className="container">
