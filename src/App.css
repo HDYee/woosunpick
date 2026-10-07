@@ -714,76 +714,38 @@ button {
 
 
 .store-card {
-  padding:
-    25px;
+  position: relative;
 
-  border:
-    1px solid #e8e8ee;
-
-  border-radius:
-    17px;
-
-  background:
-    white;
-
-  box-shadow:
-    0 5px 22px
-    rgba(
-      0,
-      0,
-      0,
-      0.025
-    );
+  overflow: hidden;
 }
 
 
-.store-card-top {
-  display:
-    flex;
+.store-card::before {
+  content: "";
 
-  align-items:
-    flex-start;
+  position: absolute;
 
-  justify-content:
-    space-between;
+  top: 0;
+  left: 0;
+  right: 0;
 
-  gap:
-    20px;
+  height: 3px;
 }
 
 
-.store-id {
-  color:
-    #8f8f99;
-
-  font-size:
-    11px;
-
-  font-weight:
-    700;
+.store-card-down::before {
+  background: #ed1c24;
 }
 
 
-.store-card h3 {
-  margin:
-    4px 0;
-
-  font-size:
-    20px;
+.store-card-up::before {
+  background: #2f6fa7;
 }
 
 
-.store-card-top p {
-  margin:
-    0;
-
-  color:
-    #888;
-
-  font-size:
-    12px;
+.store-card-neutral::before {
+  background: #9aa0a6;
 }
-
 
 /* ==============================
    STATUS
@@ -902,67 +864,65 @@ button {
 /* ==============================
    AI / TARGET
 ============================== */
-
-.analysis-box,
-.target-box {
-  padding:
-    16px 18px;
-
-  border-radius:
-    11px;
-
-  line-height:
-    1.7;
-}
-
-
 .analysis-box {
   margin-bottom: 11px;
 
   padding: 17px 19px;
 
-  border-left: 3px solid var(--kt-red);
+  border-radius: 10px;
 
-  border-radius: 8px;
-
-  background: #fff7f7;
+  border-left: 3px solid transparent;
 }
 
 
-.box-label {
-  display: block;
+/* 관리필요 / 하락 */
+.analysis-box.analysis-down {
+  background: #fff4f5;
 
-  margin-bottom: 6px;
-
-  color: var(--kt-red);
-
-  font-size: 11px;
-  font-weight: 900;
-}
-
-.target-box {
-  background:
-    #f7f7f9;
-}
-
-.target-box span {
-  color:
-    #666;
+  border-left-color: #ed1c24;
 }
 
 
-.analysis-box p,
-.target-box p {
-  margin:
-    0;
-
-  color:
-    #555;
-
-  font-size:
-    12px;
+.analysis-box.analysis-down .box-label {
+  color: #d71920;
 }
 
+
+/* 우수사례 / 상승 */
+.analysis-box.analysis-up {
+  background: #f2f7fd;
+
+  border-left-color: #2f6fa7;
+}
+
+
+.analysis-box.analysis-up .box-label {
+  color: #2f6fa7;
+}
+
+
+/* 유지 */
+.analysis-box.analysis-neutral {
+  background: #f5f6f7;
+
+  border-left-color: #8b9097;
+}
+
+
+.analysis-box.analysis-neutral .box-label {
+  color: #676c72;
+}
+
+
+.analysis-box p {
+  margin: 0;
+
+  color: #4e5359;
+
+  font-size: 12px;
+
+  line-height: 1.7;
+}
 
 /* ==============================
    LOADING

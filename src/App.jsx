@@ -1015,8 +1015,16 @@ function StoreCard({
 
   return (
 
-    <article className="store-card">
-
+    <article
+      className={`store-card ${store.store_status === '우수사례' ||
+          store.store_status === '상승'
+          ? 'store-card-up'
+          : store.store_status === '관리필요' ||
+            store.store_status === '하락'
+            ? 'store-card-down'
+            : 'store-card-neutral'
+        }`}
+    >
       <div className="store-card-top">
 
         <div>
@@ -1083,8 +1091,16 @@ function StoreCard({
       </div>
 
 
-      <div className="analysis-box">
-
+      <div
+        className={`analysis-box ${store.store_status === '우수사례' ||
+            store.store_status === '상승'
+            ? 'analysis-up'
+            : store.store_status === '관리필요' ||
+              store.store_status === '하락'
+              ? 'analysis-down'
+              : 'analysis-neutral'
+          }`}
+      >
         <span className="box-label">
           AI 주요 분석
         </span>
@@ -1093,7 +1109,6 @@ function StoreCard({
           {store.status_reason ||
             '분석 내용이 없습니다.'}
         </p>
-
       </div>
 
 
