@@ -688,23 +688,131 @@ function DashboardPage() {
   const stores =
     data?.stores ?? [];
 
-  function downloadLatestReport() {
+async function downloadLatestReport() {
 
-    const month =
-      data?.analysis_month;
+  const month =
+    data?.analysis_month;
 
-    if (!month) {
-      alert(
-        '다운로드할 분석월이 없습니다.'
+  if (!month) {
+    alert(
+      '다운로드할 분석월이 없습니다.'
+    );
+    return;
+  }
+
+  const url =
+    `https://hddoy2021.app.n8n.cloud/webhook/report-download?month=${month}`;
+
+  try {
+
+    const response =
+      await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(
+        `PDF 다운로드 실패: ${response.status}`
       );
-      return;
     }
 
-    const url =
-      `https://hddoy2021.app.n8n.cloud/webhook/report-download?month=${month}`;
 
-    window.location.href = url;
+    // ==============================
+    // 파일명 가져오기
+    // ==============================
+
+    const disposition =
+      response.headers.get(
+        'Content-Disposition'
+      );
+
+    let fileName =
+      'woosunpick-report.pdf';
+
+
+    if (disposition) {
+
+      // filename*=UTF-8''한글파일명.pdf
+      const utf8Match =
+        disposition.match(
+          /filename\*=UTF-8''([^;]+)/i
+        );
+
+      if (utf8Match?.[1]) {
+
+        fileName =
+          decodeURIComponent(
+            utf8Match[1]
+          );
+
+      } else {
+
+        // fallback filename="..."
+        const normalMatch =
+          disposition.match(
+            /filename="?([^"]+)"?/i
+          );
+
+        if (normalMatch?.[1]) {
+          fileName =
+            normalMatch[1];
+        }
+
+      }
+
+    }
+
+
+    // ==============================
+    // PDF Blob 생성
+    // ==============================
+
+    const blob =
+      await response.blob();
+
+    const blobUrl =
+      window.URL.createObjectURL(
+        blob
+      );
+
+
+    // ==============================
+    // 강제 다운로드
+    // ==============================
+
+    const link =
+      document.createElement('a');
+
+    link.href =
+      blobUrl;
+
+    link.download =
+      fileName;
+
+    document.body.appendChild(
+      link
+    );
+
+    link.click();
+
+    link.remove();
+
+    window.URL.revokeObjectURL(
+      blobUrl
+    );
+
+  } catch (error) {
+
+    console.error(
+      'PDF 다운로드 오류:',
+      error
+    );
+
+    alert(
+      'PDF 다운로드 중 오류가 발생했습니다.'
+    );
+
   }
+
+}
   return (
 
     <main className="container">
